@@ -1,18 +1,26 @@
-# module "eks" {
-#   source          = "terraform-aws-modules/eks/aws"
-#   version         = ">= 19.0.0"
+module "eks" {
+  source  = "terraform-aws-modules/eks/aws"
+  version = "~> 21.0"
 
-#   cluster_name    = "${var.project}-eks"
-#   cluster_version = "1.28"
-#   subnets         = [aws_subnet.public_a.id, aws_subnet.public_b.id]
-#   vpc_id          = aws_vpc.this.id
+  name               = "inkspire-eks-cluster"
+  kubernetes_version = "1.33"
 
-#   node_groups = {
-#     ng-default = {
-#       desired_capacity = 2
-#       instance_type    = "t3.medium"
-#     }
-#   }
+  # Optional
+  endpoint_public_access = true
 
-#   manage_aws_auth = true
-# }
+  # Optional: Adds the current caller identity as an administrator via cluster access entry
+  enable_cluster_creator_admin_permissions = true
+
+  compute_config = {
+    enabled    = true
+    node_pools = ["general-purpose"]
+  }
+
+  vpc_id     = aws_vpc.this.id
+  subnet_ids = [aws_subnet.public_a.id, aws_subnet.public_b.id]
+
+  tags = {
+    Environment = "dev"
+    Terraform   = "true"
+  }
+}

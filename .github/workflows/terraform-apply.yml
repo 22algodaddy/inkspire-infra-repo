@@ -30,14 +30,14 @@ jobs:
       - name: Verify AWS identity
         run: aws sts get-caller-identity   
         
-      - name: Terraform Debug
-        run: |
-          cd terraform
-          terraform init -input=false
-          terraform plan -input=false
-          terraform apply -auto-approve -input=false
-        env:
-          TF_LOG: DEBUG  
+      # - name: Terraform Debug
+      #   run: |
+      #     cd terraform
+      #     terraform init -input=false
+      #     terraform plan -input=false
+      #     terraform apply -auto-approve -input=false
+      #   env:
+      #     TF_LOG: DEBUG  
 
       - name: Terraform Init
         run: |
