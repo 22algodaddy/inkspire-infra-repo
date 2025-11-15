@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://github.com/22algodaddy/Inkspire.git'
     targetRevision: main
-    path: helm/react-app
+    path: chart/
     helm:
       valueFiles:
         - values.yaml
